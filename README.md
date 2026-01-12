@@ -58,17 +58,19 @@ python Eval_Kfold.py --model 'Woo-lee' --lr 2.4e-4 --input_type '3d' --ear_input
 ## Prediction example ##
 ![Screenshot of the prediction of HRTF by the models](https://github.com/alexphil12/Script_model_HRTF_Sonicom/blob/master/visualization/prediction_example.png)
 
-## Link to some results on Wandb ##
-# Link to hyperparameter optimization results #
+# Link to some results on Wandb #
+
+## Link to hyperparameter optimization results ##
 [Manlin-Zhao hyper-opti](https://wandb.ai/alexandre-philippon-universite-de-mons/Sonicom-benchmark-hyperparameters-opti%20Manlin-Zhao?nw=nwuseralexandrephilippon)
 
 [Le-roux hyper-opti](https://wandb.ai/alexandre-philippon-universite-de-mons/Sonicom-benchmark-hyperparameters-opti%20Le-roux?nw=nwuseralexandrephilippon)
 
 [Woo-lee hyper-opti](https://wandb.ai/alexandre-philippon-universite-de-mons/Sonicom-benchmark-hyperparameters-opti%20Woo-lee?nw=nwuseralexandrephilippon)
-# Link to K-fold evaluation #
+## Link to K-fold evaluation ##
 [links to K-fold](https://wandb.ai/alexandre-philippon-universite-de-mons/K_FOLDS_evaluation_Benchmark_models?nw=nwuseralexandrephilippon)
-# Link to training of best architectures #
+## Link to training of best architectures ##
 [links to training](https://wandb.ai/alexandre-philippon-universite-de-mons/Sonicom-Benchmark?nw=nwuseralexandrephilippon)
+
 
 
 
