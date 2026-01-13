@@ -11,7 +11,7 @@ conda activate HRTF_bench_env
 ```
 You need to install pytorch and Cuda toolkit and also the dependencies using
 ```
-git clone https://github.com/alexphil12/Script_model_HRTF_Sonicom.git
+git clone https://github.com/alexphil12/Benchmark_ears2HRTFs_models
 cd Script_model_HRTF_Sonicom
 pip install -r requirements.txt -e .
 ```
@@ -70,6 +70,7 @@ python Eval_Kfold.py --model 'Woo-lee' --lr 2.4e-4 --input_type '3d' --ear_input
 [links to K-fold](https://wandb.ai/alexandre-philippon-universite-de-mons/K_FOLDS_evaluation_Benchmark_models?nw=nwuseralexandrephilippon)
 ## Link to training of best architectures ##
 [links to training](https://wandb.ai/alexandre-philippon-universite-de-mons/Sonicom-Benchmark?nw=nwuseralexandrephilippon)
+
 
 
 
