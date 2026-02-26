@@ -18,7 +18,7 @@ pip install -r requirements.txt -e .
 ## Data ##
 The Dataset originaly used for those experiments comes from the SONICOM HRTF dataset: [link to original data](https://www.sonicom.eu/tools-and-resources/hrtf-dataset/)
 
-The preprocessed ears data (input data for the models) used in our experiments can be found at :[link to preprocessed data](https://www.dropbox.com/scl/fi/hjaryg21p4ijik29ggumk/download_2026-01-05_17-40-42.zip?rlkey=53rqkbe2dq5sic3xk4r69yasj&st=7dgzsyix&dl=0) 
+The preprocessed ears data (input data for the models) used in our experiments can be found at: [link to preprocessed data](https://www.dropbox.com/scl/fi/hjaryg21p4ijik29ggumk/download_2026-01-05_17-40-42.zip?rlkey=53rqkbe2dq5sic3xk4r69yasj&st=7dgzsyix&dl=0) 
 
 You need to dowload the data from the SONICOM HRTF dataset from subject 2 to 100 (only the HRTF folders is necessary), to put those folder into a folder called "sonicom_hrtf_dataset" and to modify accordingbly the variable "hrtf_dataset_path" in the main.py argument parser.
 
@@ -82,6 +82,7 @@ python Eval_Kfold.py --model 'Woo-lee' --lr 2.4e-4 --input_type '3d' --ear_input
 [links to K-fold](https://wandb.ai/alexandre-philippon-universite-de-mons/K_FOLDS_evaluation_Benchmark_models?nw=nwuseralexandrephilippon)
 ## Link to training of best architectures ##
 [links to training](https://wandb.ai/alexandre-philippon-universite-de-mons/Sonicom-Benchmark?nw=nwuseralexandrephilippon)
+
 
 
 
