@@ -1,3 +1,10 @@
+%{
+This standalone code lauch the barumerli's model evaluations, plots the results as shows on the png joined with this code.
+To work, you have to install and launch the amtoolbox and to put the uncompressed sofa files .(Le-roux-1D-subject0.sofa , GT etc.) into a folder designated
+with path-norm ( you will have to modify it for all instances of path-norm).
+No
+%}
+
 %% --- Computation of intersubject errors ---
 subject_list=["P0091" "P0092" "P0093" "P0095" "P0096" "P0097" "P0098" "P0099" "P0100"];
 subject_eval=["subject_0" "subject_1" "subject_2" "subject_3" "subject_4" "subject_5" "subject_6" "subject_7" "subject_8" ];
@@ -7,7 +14,6 @@ Matrix_mean_model_perf=zeros(9,10,3);
 Matrix_mean_model_perf_inv=zeros(9,10,3);
 progBar=ProgressBar(81,'Title','Intersub errors');
 path_norm="C:\Users\alexa\Documents\MATLAB\sofa_hrtf_estimated\";
-path_inv="C:\Users\alexa\Documents\MATLAB\sofa_hrtf_estimated_inv\";
 for j=1:9
     for i=1:9
         sofa_template=strcat(path_norm,subject_list(j),"_Windowed_44kHz.sofa");
@@ -411,3 +417,4 @@ hold off
 
 
 save("matrice_erreur_intermodel.mat","Matrix_mean_model_perf");
+
