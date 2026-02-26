@@ -48,6 +48,18 @@ python main.py --model 'Le-roux' --input_type '2d' --ear_input 'left' --disto_ph
 ```
 You can find the detail about the availlable hyper-parameter in the optimization.py file. (optimization is made using optuna framework). Same remark concerning the WandB monitoring, you need to adapt it with your credentials.
 
+## Create sofa file HRTFs from the models ##
+Once you models trained (with their weights located in the Model_wights folder). Modify the model weights path in the Convert-to_sofa.py
+this folder is asumed to have the following structure:
+Models weights|___model0_|weight0
+              |          |weight1
+              |          |...
+              |___model_1
+              |     .
+              |___model_2
+
+You can then run the Convert_to_sofa.py code.  
+              
 ## Run a K-fold evaluation ##
 To process this K-fold evaluation, you will have to run the Eval_Kfold.py file this time, and to precisse your parameters, note that by default, the evaluation is conducted on 5 folds. Some examples of valid commands.
 ```
@@ -70,6 +82,7 @@ python Eval_Kfold.py --model 'Woo-lee' --lr 2.4e-4 --input_type '3d' --ear_input
 [links to K-fold](https://wandb.ai/alexandre-philippon-universite-de-mons/K_FOLDS_evaluation_Benchmark_models?nw=nwuseralexandrephilippon)
 ## Link to training of best architectures ##
 [links to training](https://wandb.ai/alexandre-philippon-universite-de-mons/Sonicom-Benchmark?nw=nwuseralexandrephilippon)
+
 
 
 
