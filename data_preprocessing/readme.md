@@ -20,7 +20,7 @@ You can then run the 3D-mesh-to-voxel-auto.py (which then convert the stl mesh i
 ## Visualisation ##
 The data-stats-plot.py plot the distribution of ears distances accross different modalities to verify the representativity of our data
 
-this can be seen in the following figure:
+this can be seen in the following figure concerning 1D data:
 ![fig stats 1D](https://github.com/numediart/Benchmark_ears2HRTFs_models/blob/main/data_preprocessing/Stats%201D.png)
 
-further visualisation for 2D and 3D datas will be added later.
+further visualisation for 2D and 3D data will be added later.
