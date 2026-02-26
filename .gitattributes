@@ -1,3 +1,4 @@
-*.go linguist-language=py
+*.py linguist-language=py
 *.1 linguist-documentation
 *.md linguist-documentation
+*.ipynb linguist-documentation
