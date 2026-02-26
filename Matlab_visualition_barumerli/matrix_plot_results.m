@@ -114,8 +114,42 @@ for j=1:9
     end
 end
 progBar.release();
-
+%%  --- Computation of Kemar/GT errors ---
+subject_list=["P0091" "P0092" "P0093" "P0095" "P0096" "P0097" "P0098" "P0099" "P0100"];
+path_norm="C:\Users\alexa\Documents\MATLAB\sofa_hrtf_estimated\";
+sofa_target="C:\Users\alexa\Documents\MATLAB\KEMAR_GRAS_EarSim_LargeEars_Windowed_44kHz.sofa";
+kemar_errors=zeros(9,3);
+progBar=ProgressBar(9,'Title','Kemar computation');
+for j=1:9
+    sofa_template=strcat(path_norm,subject_list(j),"_Windowed_44kHz.sofa");
+    evalc('Sim_sofa=SOFAload(sofa_target)');
+    evalc('GT_sofa=SOFAload(sofa_template)');
+    template_dtf=SOFAhrtf2dtf(GT_sofa);
+    target_dtf=SOFAhrtf2dtf(Sim_sofa);
+    [template_extract, uwu]=barumerli2023_featureextraction(template_dtf, 'dtf','fs',44100);
+    [wuw,target_extract]=barumerli2023_featureextraction(target_dtf,'dtf','fs',44100);
+    m = barumerli2023(...
+        'template', template_extract, ...
+        'target', target_extract, ...
+        'num_exp', 50, ...
+        'sigma_ild', 0.75, ...
+        'sigma_spectral', 4.3, ...
+        'sigma_prior', 11.5, ...
+        'sigma_motor', 13.45);
+     sim = barumerli2023_metrics(m, 'middle_metrics');
+     kemar_errors(j,1)=sim.rmsP;
+     kemar_errors(j,2)=sim.rmsL;
+     kemar_errors(j,3)=sim.querr;
+     progBar([], [], []);
+end
+progBar.release();
+save("kemar_mean.mat","kemar_errors")
 %% --- Plot of intermodels errors norm ---
+
+
+kemar_baseline=mean(kemar_errors,1);
+
+
 subject_list=["P0091" "P0092" "P0093" "P0095" "P0096" "P0097" "P0098" "P0099" "P0100"];
 subject_eval=["subject_0" "subject_1" "subject_2" "subject_3" "subject_4" "subject_5" "subject_6" "subject_7" "subject_8" ];
 mat_calc=Matrix_inter_subject;
@@ -138,7 +172,7 @@ mean_rmsP_baseline=sum(mat_calc(:,:,1),"all")/72;
 mean_rmsL_baseline=sum(mat_calc(:,:,2),"all")/72;
 mean_querr_baseline=sum(mat_calc(:,:,3),"all")/72;
 
-model_list=["GT" "Woo-lee-1d" "Woo-lee-2d" "Woo-lee-3d" "Le-roux-1d" "Le-roux-2d" "Le-roux-3d" "Manlin-Zhao-1d" "Manlin-Zhao-2d" "Manlin-Zhao-3d"];
+model_list=["GT" "Woo-Lee-1d" "Woo-Lee-2d" "Woo-Lee-3d" "Le-Roux-1d" "Le-Roux-2d" "Le-Roux-3d" "Manlin-Zhao-1d" "Manlin-Zhao-2d" "Manlin-Zhao-3d"];
 
 figure('Color','w','Position',[100 100 1100 700])
 
@@ -147,10 +181,19 @@ nexttile
 rmsP_sub_mean=mean(Matrix_mean_model_perf,1);
 rmsP_sub_std=std(Matrix_mean_model_perf,0,1);
 hold on
+plot(0:10,kemar_baseline(1)*ones(1,11),"Color","black",'LineWidth',2)
 plot(0:10,mean_rmsP_top*ones(1,11),"Color","blue",'LineWidth', 2)
 plot(0:10,mean_rmsP_baseline*ones(1,11),"Color","red",'LineWidth', 2)
 plot(1:9,rmsP_sub_mean(1,2:10,1),'+','MarkerSize', 10,'Color',"black",'LineWidth', 2)
 errorbar(rmsP_sub_mean(1,2:10,1),rmsP_sub_std(1,2:10,1) ,'.','Color',"black")
+
+y1=kemar_baseline(1);
+y2=mean_rmsP_baseline;
+
+fill([0 10 10 0], [y1 y1 y2 y2], ...
+     [0.01 0.39 0.25], 'FaceAlpha', 0.3, 'EdgeColor', 'none')
+
+
 
 y1 = mean_rmsP_baseline;
 y2 = mean_rmsP_top;
@@ -160,14 +203,14 @@ fill([0 10 10 0], [y1 y1 y2 y2], ...
      'green', 'FaceAlpha', 0.3, 'EdgeColor', 'none')
 
 y11 = mean_rmsP_top;
-y22 = 25;
+y22 = 30;
 
 
 fill([0 10 10 0], [y11 y11 y22 y22], ...
      [0.5 0.5 0.5], 'FaceAlpha', 0.3, 'EdgeColor', 'none')
 
 y11 = 50;
-y22 = mean_rmsP_baseline;
+y22 = kemar_baseline(1);
 
 
 fill([0 10 10 0], [y11 y11 y22 y22], ...
@@ -177,8 +220,7 @@ hold off
 title('Polar error (°) of models')
 set(gca,'XTick',1:9,'XTickLabel',model_list(1,2:10))
 xlabel('Models')
-ylabel('Rms polar error (°)')
-legend('self HRTFs mean performance',"intersubject mean performance","models mean accross subjects performance",'Location',"northeast")
+legend('kemar baseline','self HRTFs mean performance',"intersubject mean performance","models mean performance",'Location',"northeast")
 
 
 
@@ -186,6 +228,7 @@ nexttile
 rmsL_sub_mean=mean(Matrix_mean_model_perf,1);
 rmsL_sub_std=std(Matrix_mean_model_perf,0,1);
 hold on
+plot(0:10,kemar_baseline(2)*ones(1,11),"Color","black",'LineWidth',2)
 plot(0:10,mean_rmsL_top*ones(1,11),"Color","blue",'LineWidth', 2)
 plot(0:10,mean_rmsL_baseline*ones(1,11),"Color","red",'LineWidth', 2)
 plot(1:9,rmsL_sub_mean(1,2:10,2),'+','MarkerSize', 10,'Color',"black",'LineWidth', 2)
@@ -199,7 +242,7 @@ fill([0 10 10 0], [y1 y1 y2 y2], ...
      'green', 'FaceAlpha', 0.3, 'EdgeColor', 'none')
 
 y11 = mean_rmsL_top;
-y22 = 5;
+y22 = 10;
 
 
 fill([0 10 10 0], [y11 y11 y22 y22], ...
@@ -217,8 +260,7 @@ hold off
 title('Lateral errors (°) of models')
 set(gca,'XTick',1:9,'XTickLabel',model_list(1,2:10))
 xlabel('Models')
-ylabel('Rms lateral error (°)')
-legend('self HRTFs mean performance',"intersubject mean performance","models mean accross subjects performance",'Location',"northeast")
+legend('kemar baseline','self HRTFs mean performance',"intersubject mean performance","models mean performance",'Location',"northeast")
 
 
 
@@ -226,10 +268,20 @@ nexttile
 rms_QU_sub_mean=mean(Matrix_mean_model_perf,1);
 rms_QU_sub_std=std(Matrix_mean_model_perf,0,1);
 hold on
+plot(0:10,kemar_baseline(3)*ones(1,11),"Color","black",'LineWidth',2)
 plot(0:10,mean_querr_top*ones(1,11),"Color","blue",'LineWidth', 2)
 plot(0:10,mean_querr_baseline*ones(1,11),"Color","red",'LineWidth', 2)
 plot(1:9,rms_QU_sub_mean(1,2:10,3),'+','MarkerSize', 10,'Color',"black",'LineWidth', 2)
 errorbar(rms_QU_sub_mean(1,2:10,3),rms_QU_sub_std(1,2:10,3),'.','Color','black');
+
+y1=kemar_baseline(3);
+y2=mean_querr_baseline;
+
+fill([0 10 10 0], [y1 y1 y2 y2], ...
+     [0.01 0.39 0.25], 'FaceAlpha', 0.3, 'EdgeColor', 'none')
+
+
+
 y1 = mean_querr_baseline;
 y2 = mean_querr_top;
 
@@ -238,14 +290,14 @@ fill([0 10 10 0], [y1 y1 y2 y2], ...
      'green', 'FaceAlpha', 0.3, 'EdgeColor', 'none')
 
 y11 = mean_querr_top;
-y22 = 0;
+y22 = 5;
 
 
 fill([0 10 10 0], [y11 y11 y22 y22], ...
      [0.5 0.5 0.5], 'FaceAlpha', 0.3, 'EdgeColor', 'none')
 
 y11 = 45;
-y22 = mean_querr_baseline;
+y22 = kemar_baseline(3);
 xl=xlim;
 
 fill([0 10 10 0], [y11 y11 y22 y22], ...
@@ -255,8 +307,7 @@ hold off
 title('Quadrant errors (%) of models')
 set(gca,'XTick',1:9,'XTickLabel',model_list(1,2:10))
 xlabel('Models')
-ylabel('Quadrant error (%) lateral error')
-legend('self HRTFs mean performance',"intersubject mean performance","models mean accross subjects performance",'Location',"northeast")
+legend('kemar baseline','self HRTFs mean performance',"intersubject mean performance","models mean  performance",'Location',"northeast")
 
 
 
@@ -281,6 +332,12 @@ ylabel('Target HRTF ')
 hold on
 for j=1:9
     for i=1:10
+        if Matrix_mean_model_perf(j,i,1)<=kemar_baseline(1)
+            plot(j,i, 'x', ...
+            'Color', 'g', ...
+            'LineWidth', 2.5, ...
+            'MarkerSize', 12);        
+        end
         if Matrix_mean_model_perf(j,i,1)<=mean_rmsP_baseline
            plot(j,i, 'x', ...
             'Color', 'b', ...
@@ -305,6 +362,12 @@ xlabel('Reference HRTF')
 hold on
 for j=1:9
     for i=1:10
+        if Matrix_mean_model_perf(j,i,2)<=kemar_baseline(2)
+            plot(j,i, 'x', ...
+            'Color', 'g', ...
+            'LineWidth', 2.5, ...
+            'MarkerSize', 12);        
+        end
         if Matrix_mean_model_perf(j,i,2)<=mean_rmsL_baseline
            plot(j,i, 'x', ...
             'Color', 'b', ...
@@ -329,6 +392,12 @@ xlabel('Reference HRTF')
 hold on
 for j=1:9
     for i=1:10
+        if Matrix_mean_model_perf(j,i,3)<=kemar_baseline(3)
+            plot(j,i, 'x', ...
+            'Color', 'g', ...
+            'LineWidth', 2.5, ...
+            'MarkerSize', 12);        
+        end
         if Matrix_mean_model_perf(j,i,3)<=mean_querr_baseline
            plot(j,i, 'x', ...
             'Color', 'b', ...
