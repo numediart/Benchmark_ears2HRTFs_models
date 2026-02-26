@@ -1,7 +1,7 @@
 # Benchmark of AI model estimating HRTFs from ears representation #
 ![Screenshot of the scheme resuming the idea of the benchmark](https://github.com/alexphil12/Script_model_HRTF_Sonicom/blob/master/Capture%20d'%C3%A9cran%202026-01-05%20180057.png)
 
-This repository containt the code of the following paper:
+This repository containt the official implementation of the following paper:
 > Benchmark for estimating HRTFs An evaluation benchmark of artificial intelligence models for estimating head-related transfer functions (HRTFs) from ear shape representations
 ## Setup ##
 You can create a Conda environment
@@ -51,13 +51,14 @@ You can find the detail about the availlable hyper-parameter in the optimization
 ## Create sofa file HRTFs from the models ##
 Once you models trained (with their weights located in the Model_wights folder). Modify the model weights path in the Convert-to_sofa.py
 this folder is asumed to have the following structure:
+```
 Models weights|___model0_|weight0
               |          |weight1
               |          |...
               |___model_1
               |     .
               |___model_2
-
+```
 You can then run the Convert_to_sofa.py code.  
               
 ## Run a K-fold evaluation ##
@@ -82,6 +83,7 @@ python Eval_Kfold.py --model 'Woo-lee' --lr 2.4e-4 --input_type '3d' --ear_input
 [links to K-fold](https://wandb.ai/alexandre-philippon-universite-de-mons/K_FOLDS_evaluation_Benchmark_models?nw=nwuseralexandrephilippon)
 ## Link to training of best architectures ##
 [links to training](https://wandb.ai/alexandre-philippon-universite-de-mons/Sonicom-Benchmark?nw=nwuseralexandrephilippon)
+
 
 
 
