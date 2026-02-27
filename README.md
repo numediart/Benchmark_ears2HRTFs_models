@@ -22,12 +22,11 @@ The preprocessed ears data (input data for the models) used in our experiments c
 
 You need to dowload the data from the SONICOM HRTF dataset from subject 2 to 100 (only the HRTF folders is necessary), to put those folder into a folder called "sonicom_hrtf_dataset" and to modify accordingbly the variable "hrtf_dataset_path" in the main.py argument parser.
 
-Note that the 2D datas (ear photo) are not provided as their are under restricted use. If you wish to acess them, please contact Mr Turvey at o.turvey22@imperial.ac.uk  .
+Note that the 2D data (ears photos) are not provided as their are under restricted use. If you wish to acess them, please contact Mr Turvey at o.turvey22@imperial.ac.uk  .
 
 Once downloaded, the data needs to be unziped and the Folder "Mesh_3D_ears" and "Measure_1D_ears" need to be put in a folder Named HRTF_sonicom_dataset, you will have then to modify your "ears_dataset_path" variable default in the main.py argument parser.
 
 ## Run a training ##
-
 Once the data correctly set up, you can run a training by executing the main.py files with the 'train' parameter set with "True", You can modify parameters such as "model", "input_type", "batch_size" etc. All the detail on how to use those are explained on the main.py file. See some example of valid training command bellow.
 
 ```
@@ -83,6 +82,7 @@ python Eval_Kfold.py --model 'Woo-lee' --lr 2.4e-4 --input_type '3d' --ear_input
 [links to K-fold](https://wandb.ai/alexandre-philippon-universite-de-mons/K_FOLDS_evaluation_Benchmark_models?nw=nwuseralexandrephilippon)
 ## Link to training of best architectures ##
 [links to training](https://wandb.ai/alexandre-philippon-universite-de-mons/Sonicom-Benchmark?nw=nwuseralexandrephilippon)
+
 
 
 
