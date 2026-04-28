@@ -47,7 +47,7 @@ python main.py --model 'Le-roux' --input_type '2d' --ear_input 'left' --disto_ph
 ```
 You can find the detail about the availlable hyper-parameter in the optimization.py file. (optimization is made using optuna framework). Same remark concerning the WandB monitoring, you need to adapt it with your credentials.
 
-## Create sofa file HRTFs from the models ##
+## Create sofa HRTFs files from the models ##
 Once you models trained (with their weights located in the Model_wights folder). Modify the model weights path in the Convert-to_sofa.py
 this folder is asumed to have the following structure:
 ```
